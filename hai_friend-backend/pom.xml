@@ -8,11 +8,11 @@
         <version>3.3.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.userMS</groupId>
-    <artifactId>userMS-backend</artifactId>
+    <groupId>com.hai_friend</groupId>
+    <artifactId>hai_friend-backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>userMS-backend</name>
-    <description>userMS-backend</description>
+    <name>hai_friend-backend</name>
+    <description>hai_friend-backend</description>
     <url/>
     <licenses>
         <license/>
@@ -104,6 +104,12 @@
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session-data-redis</artifactId>
             <version>3.3.2</version>
+        </dependency>
+        <!--https://redisson.org/docs/getting-started/-->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+            <version>3.38.1</version>
         </dependency>
 
     </dependencies>

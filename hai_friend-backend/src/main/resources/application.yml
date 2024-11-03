@@ -2,7 +2,7 @@ spring:
   profiles:
     active: dev # 开发环境
   application:
-    name: userMS-backend
+    name: hai_friend-backend
   # DataSource Config
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -45,7 +45,7 @@ springdoc:
   group-configs:
     - group: 'default'
       paths-to-match: '/**'
-      packages-to-scan: com.userms.usermsbackend.controller    #这里换成你模块下controller包的路径
+      packages-to-scan: com.hai_friend.hai_friend_backend.controller    #这里换成你模块下controller包的路径
 
 # knife4j的增强配置，不需要增强可以不配（建议配置一下）
 knife4j:
