@@ -108,7 +108,7 @@ public class UserController {
 
     @GetMapping("/search")
     @Operation(summary = "根据用户名模糊查询用户")
-    public BaseResponse<List<User>> serchUsers(String username, HttpServletRequest request) {
+    public BaseResponse<List<User>> searchUsers(String username, HttpServletRequest request) {
         userService.getLoginUser(request);
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         if (StringUtils.isNotBlank(username)) {
@@ -121,7 +121,7 @@ public class UserController {
 
     @GetMapping("/search/tags")
     @Operation(summary = "根据标签查询用户")
-    public BaseResponse<List<User>> serchUsersByTags(@RequestParam(required = false) @Parameter(name = "tagNameList", description = "标签（直接传标签名，多个标签用逗号分隔）") List<String> tagNameList) {
+    public BaseResponse<List<User>> searchUsersByTags(@RequestParam(required = false) @Parameter(name = "tagNameList", description = "标签（直接传标签名，多个标签用逗号分隔）") List<String> tagNameList) {
         if (CollectionUtils.isEmpty(tagNameList)) {
             throw new BusinessException(ErrorCode.PRAMS_ERROR);
         }
@@ -129,6 +129,7 @@ public class UserController {
         return ResultUils.success(userList);
     }
 
+    // todo 推荐多个，未实现
     @GetMapping("/recommend")
     @Operation(summary = "用户数据分页请求")
     public BaseResponse<Page<User>> recommendUsers(@Parameter(name = "pageSize", description = "每页显示数量") long pageSize, @Parameter(name = "pageNum", description = "当前页页数") long pageNum, HttpServletRequest request) {
@@ -145,7 +146,7 @@ public class UserController {
         userPage = userService.page(new Page<>(pageNum, pageSize), queryWrapper);
         // 写入缓存
         try {
-            valueOperations.set(redisKey, userPage, 30000, TimeUnit.MILLISECONDS);
+            valueOperations.set(redisKey, userPage, 86400000, TimeUnit.MILLISECONDS);
         } catch (Exception e) {
             log.error("redis set error", e);
         }
@@ -178,5 +179,21 @@ public class UserController {
         }
         boolean b = userService.removeById(id);
         return ResultUils.success(b);
+    }
+
+    /**
+     * 获取最匹配用户
+     *
+     * @param num
+     * @param request
+     * @return
+     */
+    @GetMapping("/match")
+    public BaseResponse<List<User>> marchUsers(long num, HttpServletRequest request) {
+        if (num <= 0 || num > 20) {
+            throw new BusinessException(ErrorCode.PRAMS_ERROR);
+        }
+        User user = userService.getLoginUser(request);
+        return ResultUils.success(userService.matchUsers(num,user));
     }
 }

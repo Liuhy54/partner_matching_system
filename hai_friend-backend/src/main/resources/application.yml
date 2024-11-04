@@ -11,7 +11,7 @@ spring:
     password: root
   # session 失效时间
   session:
-    timeout: 1800 # session过期时间，单位为秒，默认30分钟
+    timeout: 86400000 # session过期时间，单位为秒，默认30分钟
   # redis配置
   data:
     redis:
@@ -45,7 +45,9 @@ springdoc:
   group-configs:
     - group: 'default'
       paths-to-match: '/**'
-      packages-to-scan: com.hai_friend.hai_friend_backend.controller    #这里换成你模块下controller包的路径
+      packages-to-scan: com.hai_friend.hai_friend_backend.controller   #这里换成你模块下controller包的路径
+  # 默认是false，需要设置为true
+  default-flat-param-object: true
 
 # knife4j的增强配置，不需要增强可以不配（建议配置一下）
 knife4j:

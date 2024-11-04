@@ -12,6 +12,7 @@ public enum ErrorCode {
     NULL_ERROR(40001, "请求参数为空", ""),
     NOT_LOGIN(40100, "未登录", ""),
     NOT_PERMISSION(40101, "无权限", ""),
+    FORBIDDEN(40300, "禁止操作", ""),
     SYSTEM_ERROR(50000, "系统内部错误", "");
 
     /**

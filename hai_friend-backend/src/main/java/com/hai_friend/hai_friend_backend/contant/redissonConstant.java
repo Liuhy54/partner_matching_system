@@ -11,4 +11,8 @@ public interface redissonConstant {
 
 
     String REDIS_CHANNEL_PRECACHEJOB_CACHE_LOCK = "haiFriend:cache:lock:";
+
+    String REDIS_JOIN_TEAM_USER = "haiFriend:join:team:user:";
+
+    String REDIS_JOIN_TEAM_TEAM = "haiFriend:join:team:team:";
 }

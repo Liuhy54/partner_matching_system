@@ -15,8 +15,6 @@ class HaiFriendBackendApplicationTests {
         System.out.println(newPassword);
     }
 
-    @Test
-    void contextLoads() {
-    }
+
 
 }
