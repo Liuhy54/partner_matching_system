@@ -21,8 +21,45 @@ create table user
     comment '用户' collate = utf16_bin;
 
 
+-- 队伍表
+create table team
+(
+    id          bigint auto_increment comment 'id'
+        primary key,
+    name        varchar(256) charset utf8mb4       not null comment '队伍名称',
+    description varchar(1024) charset utf8mb4      null comment '描述',
+    maxNum      int      default 1                 not null comment '最大人数',
+    expiredTime datetime                           null comment '过期时间',
+    userId      bigint comment '用户id',
+    userRole    int      default 0                 not null comment '组队状态：0 - 公开 1 - 私有 2 - 加密',
+    password    varchar(256) charset utf8mb4       null comment '密码',
 
--- auto-generated definition
+    createTime  datetime default CURRENT_TIMESTAMP null comment '创建时间',
+    updateTime  datetime default CURRENT_TIMESTAMP null on update CURRENT_TIMESTAMP comment '更新时间',
+    isDelete    tinyint  default 0                 null comment '删除'
+)
+    comment '队伍' engine = InnoDB
+                   collate = utf16_bin;
+
+
+
+-- 用户队伍关系表
+create table user_team
+(
+    id         bigint auto_increment comment 'id'
+        primary key,
+    userId     bigint comment '用户id',
+    teamId     bigint comment '队伍id',
+    joinTime   datetime                           null comment '加入时间',
+    createTime datetime default CURRENT_TIMESTAMP null comment '创建时间',
+    updateTime datetime default CURRENT_TIMESTAMP null on update CURRENT_TIMESTAMP comment '更新时间',
+    isDelete   tinyint  default 0                 null comment '删除'
+)
+    comment '用户队伍关系' engine = InnoDB
+                           collate = utf16_bin;
+
+
+-- 标签表
 create table tag
 (
     id         bigint auto_increment comment 'id'

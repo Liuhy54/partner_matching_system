@@ -108,7 +108,7 @@ public class UserController {
 
     @GetMapping("/search")
     @Operation(summary = "根据用户名模糊查询用户")
-    public BaseResponse<List<User>> serchUsers(String username, HttpServletRequest request) {
+    public BaseResponse<List<User>> searchUsers(String username, HttpServletRequest request) {
         userService.getLoginUser(request);
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         if (StringUtils.isNotBlank(username)) {
@@ -121,7 +121,7 @@ public class UserController {
 
     @GetMapping("/search/tags")
     @Operation(summary = "根据标签查询用户")
-    public BaseResponse<List<User>> serchUsersByTags(@RequestParam(required = false) @Parameter(name = "tagNameList", description = "标签（直接传标签名，多个标签用逗号分隔）") List<String> tagNameList) {
+    public BaseResponse<List<User>> searchUsersByTags(@RequestParam(required = false) @Parameter(name = "tagNameList", description = "标签（直接传标签名，多个标签用逗号分隔）") List<String> tagNameList) {
         if (CollectionUtils.isEmpty(tagNameList)) {
             throw new BusinessException(ErrorCode.PRAMS_ERROR);
         }
@@ -145,7 +145,7 @@ public class UserController {
         userPage = userService.page(new Page<>(pageNum, pageSize), queryWrapper);
         // 写入缓存
         try {
-            valueOperations.set(redisKey, userPage, 30000, TimeUnit.MILLISECONDS);
+            valueOperations.set(redisKey, userPage, 86400000, TimeUnit.MILLISECONDS);
         } catch (Exception e) {
             log.error("redis set error", e);
         }
